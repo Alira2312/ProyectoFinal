@@ -110,16 +110,19 @@ app.controller('CitasController', function($scope) {
     }
 
     $scope.Cita_ChangeWorking = function(data) {
+        //atendiendo
         data.Status = 2;
         localStorage.setItem("list_Citas", JSON.stringify($scope.list_Citas));
     }
 
     $scope.Cita_ChangeCompleted = function(data) {
+        //atendido
         data.Status = 3;
         localStorage.setItem("list_Citas", JSON.stringify($scope.list_Citas));
     }
 
     $scope.Cita_ChangeCancel = function(data) {
+        //cancelado
         data.Status = 4;
         localStorage.setItem("list_Citas", JSON.stringify($scope.list_Citas));
     }
@@ -178,6 +181,15 @@ app.controller('CitasController', function($scope) {
     $scope.Clear = function(){
         $scope.mastersearch='';
         $scope.ValToSrch='';
+    }
+
+    $scope.Mensaje = function(orden) {
+        //validar si el telefono es numerico
+        var urlApiwhatsapp = 'https://api.whatsapp.com/send?phone';
+        var text = "👋 Saludos,➡️ me comunico desde la pagina de dentistas ⬅️ , Hablo con usted para ver si me podia dar soporte con unas dudas??";
+            
+        window.open(urlApiwhatsapp + "=+5216642939122&text=" + text, "_blank");
+
     }
 
 });
