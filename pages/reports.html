@@ -134,10 +134,9 @@
                 <!-- Date Technical -->
 
                 <div class="col-12 col-md-4">
-                  <button class="btn btn-warning" ng-click="clean()"><i class="fas fa-eraser"></i> Limpiar</button>
-                  <button class="btn btn-primary" ng-click="Openmodal_NewCita()"><i class="fas fa-plus"></i> Nueva
-                    Cita</button>
-                  <button class="btn btn-success" ng-click="ReportToExcel()"><i class="fas fa-file-excel"></i>
+                  <button class="btn btn-warning" ng-click="Clear()"><i class="fas fa-eraser"></i> Limpiar</button>
+                  
+                  <button class="btn btn-success" ng-click="export_Excel()"><i class="fas fa-file-excel"></i>
                     Exportar
                   </button>
                 </div>
@@ -209,8 +208,8 @@
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="https://binmanager.mitechnologiesinc.com/Areas/CommonResources/daterangepicker/moment.min.js"></script>
-    <script
-      src="https://binmanager.mitechnologiesinc.com/Areas/CommonResources/daterangepicker/daterangepicker.min.js"></script>
+    <script  src="https://binmanager.mitechnologiesinc.com/Areas/CommonResources/daterangepicker/daterangepicker.min.js"></script>
+    <script  src="https://binmanager.mitechnologiesinc.com/Areas/CommonResources/alaSql/alasql.min.js"></script>
     <!-- Bootstrap -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Ekko Lightbox -->
