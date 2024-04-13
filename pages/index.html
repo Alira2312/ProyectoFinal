@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dentista</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="../plugins/ekko-lightbox/ekko-lightbox.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+  <link href="http://logisticsmanager.mitechnologiesinc.com/Resource/Plugins/DateRange/daterangepicker.css"
+    rel="stylesheet" />
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed" ng-app="CitasApp" ng-controller="CitasController">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../index3.html" class="brand-link">
+        <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">Dentista</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img
+              src="https://scontent.fsan1-2.fna.fbcdn.net/v/t1.6435-9/168503710_2965760353670837_4185807920607103699_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFfFlqv1x5uZVuWSy8m3xkVRD8wTr_iocZEPzBOv-Khxuiaw4xH6yd0E0Mv-ivB2mRUxu3xDdEpEBv_yH8FdQAX&_nc_ohc=upWhocoBsj8Ab5krvau&_nc_ht=scontent.fsan1-2.fna&oh=00_AfAGiqM4hbO8SLKPDXJipWGbzo1wRjsylcFJWUF--KGrcg&oe=664114F2"
+              class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Alberto LH</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item ">
+              <a href="index.html" class="nav-link active">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Citas
+                  <span class="badge badge-success right">{{(list_Citas | filter:{Status:3}).length}}</span>
+                </p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a href="reports.html" class="nav-link">
+                <i class="nav-icon far fa-list-alt"></i>
+                <p>
+                  Reporte
+                  <span class="badge badge-success right">{{list_Citas.length}}</span>
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper kanban">
+      <section class="content-header p-0">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">
+              <h1>Citas</h1>
+            </div>
+            <div class="col-sm-6 d-none d-sm-block">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Citas</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-header">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-3">
+                  <div class="input-group">
+                    <input type="text" id="Srch" class="form-control ng-pristine ng-valid ng-empty ng-touched"
+                      ng-model="ValToSrch" ng-keypress="SrchEnter($event)" placeholder="Buscar: Cliente, Descripcion">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-default" ng-click="Click_search(ValToSrch)"><i
+                          class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                  <small>Presione button para realizar la busqueda</small>
+                </div>
+
+                <!-- Date Technical -->
+
+                <div class="col-12 col-md-4">
+                  <button class="btn btn-warning" ng-click="clean()"><i class="fas fa-eraser"></i> Limpiar</button>
+                  <button class="btn btn-primary" ng-click="Openmodal_NewCita()"><i class="fas fa-plus"></i> Nueva
+                    Cita</button>
+                  
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content pb-3">
+        <div class="container-fluid h-80" style="margin-left: 2px;margin-right: 2px;">
+          <div class="card card-row card-secondary">
+            <div class="card-header">
+              <h3 class="card-title">
+                Lista de espera
+              </h3>
+            </div>
+            <div class="card-body">
+
+              <div class="card card-secondary card-outline"
+                ng-repeat="C in list_Citas | filter:{Status:1} | filter:{Type:'Espera'} | filter:mastersearch  track by $index">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <a href="#" class="btn btn-tool btn-link">#{{C.id}}</a>
+                    {{C.ClienteName}}
+                  </h5>
+                  <div class="card-tools">
+                    <a href="#" class="btn btn-tool" ng-click="Cita_ChangeWorking(C)">
+                      <i class="fas fa-play text-info "></i>
+                    </a>
+                    <a href="#" class="btn btn-tool" ng-click="Openmodal_EditCita(C)">
+                      <i class="fas fa-pen text-warning"></i>
+                    </a>
+                    <a href="#" class="btn btn-tool" ng-click="Cita_ChangeCancel(C)">
+                      <i class="fas fa-times text-danger "></i>
+                    </a>
+
+
+                  </div>
+
+                </div>
+                <div class="card-header text-center">
+                  <div class="col-12">
+                    {{C.Fecha}} - {{C.Hora}}
+                  </div>
+                </div>
+                <div class="card-body">
+
+                  <p>
+                    {{C.Details}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-row card-primary">
+            <div class="card-header">
+              <h3 class="card-title">
+                Citas
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="card card-primary card-outline"
+                ng-repeat="C in list_Citas | filter:{Status:1} | filter:{Type:'Cita'} | filter:mastersearch  track by $index">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <a href="#" class="btn btn-tool btn-link">#{{C.id}}</a>
+                    {{C.ClienteName}}
+                  </h5>
+                  <div class="card-tools">
+                    <a href="#" class="btn btn-tool" ng-click="Cita_ChangeWorking(C)">
+                      <i class="fas fa-play text-info "></i>
+                    </a>
+                    <a href="#" class="btn btn-tool" ng-click="Openmodal_EditCita(C)">
+                      <i class="fas fa-pen text-warning"></i>
+                    </a>
+                    <a href="#" class="btn btn-tool" ng-click="Cita_ChangeCancel(C)">
+                      <i class="fas fa-times text-danger "></i>
+                    </a>
+
+
+                  </div>
+
+                </div>
+                <div class="card-header text-center">
+                  <div class="col-12">
+                    {{C.Fecha}} - {{C.Hora}}
+                  </div>
+                </div>
+                <div class="card-body">
+
+                  <p>
+                    {{C.Details}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-row card-default">
+            <div class="card-header bg-info">
+              <h3 class="card-title">
+                Atendiendo
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="card card-info card-outline"
+                ng-repeat="C in list_Citas | filter:{Status:2} | filter:mastersearch  track by $index">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <a href="#" class="btn btn-tool btn-link">#{{C.id}}</a>
+                    {{C.ClienteName}}
+                  </h5>
+                  <div class="card-tools">
+                    <a href="#" class="btn btn-tool" ng-click="Cita_ChangeCompleted(C)">
+                      <i class="fas fa-check text-success"></i>
+                    </a>
+                  </div>
+
+                </div>
+                <div class="card-header text-center">
+                  <div class="col-12">
+                    {{C.Fecha}} - {{C.Hora}}
+                  </div>
+                </div>
+                <div class="card-body">
+
+                  <p>
+                    {{C.Details}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-row card-success">
+            <div class="card-header">
+              <h3 class="card-title">
+                Atendidos
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="card card-success card-outline"
+                ng-repeat="C in list_Citas | filter:{Status:3} | filter:mastersearch  track by $index">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <a href="#" class="btn btn-tool btn-link">#{{C.id}}</a>
+                    {{C.ClienteName}}
+                  </h5>
+                  <div class="card-tools">
+                    <span class="badge badge-success">Atendido</span>
+                  </div>
+
+                </div>
+                <div class="card-header text-center">
+                  <div class="col-12">
+                    {{C.Fecha}} - {{C.Hora}}
+                  </div>
+                </div>
+                <div class="card-body">
+
+                  <p>
+                    {{C.Details}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-row card-danger">
+            <div class="card-header">
+              <h3 class="card-title">
+                Cancelados
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="card card-danger card-outline"
+                ng-repeat="C in list_Citas | filter:{Status:4} | filter:mastersearch   track by $index">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <a href="#" class="btn btn-tool btn-link">#{{C.id}}</a>
+                    {{C.ClienteName}}
+                  </h5>
+                  <div class="card-tools">
+                    <span class="badge badge-danger">Cancelado</span>
+                  </div>
+
+                </div>
+                <div class="card-header text-center">
+                  <div class="col-12">
+                    {{C.Fecha}} - {{C.Hora}}
+                  </div>
+                </div>
+                <div class="card-body">
+
+                  <p>
+                    {{C.Details}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal fade " id="NewCita" aria-modal="true" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title "><i class="fas fa-users"></i> Registro / Edicion
+              <br> <span class="text-muted " style="font-size:16px;"><span class="text-danger ">*</span> Datos
+                Requeridos</span><br>
+            </h4>
+            <button type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body">
+            <label><span class="text-danger">*</span> Nombre Cliente:</label>
+            <input class="form-control" maxlength="50" ng-model="NameCliente" type="text" required="">
+            <small>0/50</small>
+            <br>
+            <label><span class="text-danger">*</span> Razon de la cita:</label>
+            <textarea class="form-control  " maxlength="200" ng-model="Details" type="text" required=""></textarea>
+            <small>0/200</small>
+            <br>
+            <label><span class="text-danger">*</span> Tipo:</label>
+            <select class="form-control" maxlength="50" ng-model="Type" required="">
+              <option value="Cita">Cita</option>
+              <option value="Espera">Lista de espera</option>
+            </select>
+            <br>
+            <label><span class="text-danger">*</span> Fecha:</label>
+            <input type="text" maxlength="50" class="form-control" id="daterangepicker_LoadDate">
+            <label><span class="text-danger">*</span> Hora:</label>
+            <input type="time" maxlength="50" id="inputHora" ng-model="Hora" pattern="[0-9]{2}:[0-9]{2}"
+              class="form-control ">
+            <br>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" ng-click="Save_Cita()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <script src="http://logisticsmanager.mitechnologiesinc.com/Resource/Plugins/DateRange/moment.min.js"></script>
+  <script
+    src="http://logisticsmanager.mitechnologiesinc.com/Resource/Plugins/DateRange/daterangepicker.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Ekko Lightbox -->
+  <script src="../plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/adminlte.min.js"></script>
+  <!-- Filterizr-->
+  <script src="../plugins/filterizr/jquery.filterizr.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <!-- Page specific script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+  <script src="../dist/js/app.js"></script>
+
+
+</body>
+
+</html>

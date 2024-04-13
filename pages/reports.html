@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dentista</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="../plugins/ekko-lightbox/ekko-lightbox.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+  <link href="http://logisticsmanager.mitechnologiesinc.com/Resource/Plugins/DateRange/daterangepicker.css"
+    rel="stylesheet" />
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed" ng-app="CitasApp" ng-controller="CitasController">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../index3.html" class="brand-link">
+        <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">Dentista</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img
+              src="https://scontent.fsan1-2.fna.fbcdn.net/v/t1.6435-9/168503710_2965760353670837_4185807920607103699_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFfFlqv1x5uZVuWSy8m3xkVRD8wTr_iocZEPzBOv-Khxuiaw4xH6yd0E0Mv-ivB2mRUxu3xDdEpEBv_yH8FdQAX&_nc_ohc=upWhocoBsj8Ab5krvau&_nc_ht=scontent.fsan1-2.fna&oh=00_AfAGiqM4hbO8SLKPDXJipWGbzo1wRjsylcFJWUF--KGrcg&oe=664114F2"
+              class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Alberto LH</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item ">
+              <a href="index.html" class="nav-link ">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Citas
+                  <span class="badge badge-success right">{{(list_Citas | filter:{Status:3}).length}}</span>
+                </p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a href="reports.html" class="nav-link active">
+                <i class="nav-icon far fa-list-alt"></i>
+                <p>
+                  Reporte
+                  <span class="badge badge-success right">{{list_Citas.length}}</span>
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper kanban">
+      <section class="content-header p-0">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">
+              <h1>Reporte</h1>
+            </div>
+            <div class="col-sm-6 d-none d-sm-block">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Reporte</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-header">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-3">
+                  <div class="input-group">
+                    <input type="text" id="Srch" class="form-control ng-pristine ng-valid ng-empty ng-touched"
+                      ng-model="ValToSrch" ng-keypress="SrchEnter($event)" placeholder="Buscar: Cliente, Descripcion">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-default" ng-click="Click_search(ValToSrch)"><i
+                          class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                  <small>Presione button para realizar la busqueda</small>
+                </div>
+
+                <!-- Date Technical -->
+
+                <div class="col-12 col-md-4">
+                  <button class="btn btn-warning" ng-click="clean()"><i class="fas fa-eraser"></i> Limpiar</button>
+                  <button class="btn btn-primary" ng-click="Openmodal_NewCita()"><i class="fas fa-plus"></i> Nueva
+                    Cita</button>
+                  <button class="btn btn-success" ng-click="ReportToExcel()"><i class="fas fa-file-excel"></i>
+                    Exportar
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content pb-3">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Lista de Citas</h3>
+          </div>
+
+          <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Cliente</th>
+                  <th>Descripcion</th>
+                  <th>Type</th>
+                  <th>Fecha</th>
+                  <th>Progress</th>
+                  <th style="width: 40px">Label</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="C in list_Citas | filter:mastersearch track by $index">
+                <tr>
+                  <td>{{C.id}}</td>
+                  <td>{{C.ClienteName}}</td>
+                  <td>{{C.Details}}</td>
+                  <td>{{C.Type}}</td>
+                  <td>{{C.Fecha}}-{{C.Hora}}</td>
+                  <td>
+                    <div class="progress progress-xs">
+                      <div ng-show="C.Status === 1 " class="progress-bar bg-primary" style="width: 33.33%"></div>
+                      <div ng-show="C.Status === 2" class="progress-bar bg-info" style="width: 66.66%"></div>
+                      <div ng-show="C.Status === 3" class="progress-bar bg-success" style="width: 100%"></div>
+                      <div ng-show="C.Status === 4" class="progress-bar bg-danger" style="width: 100%"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <span ng-show="C.Status === 1 "  class="badge bg-primary">33.33%</span>
+                    <span ng-show="C.Status === 2" class="badge bg-info">66.66%</span>
+                    <span ng-show="C.Status === 3" class="badge bg-success">100%</span>
+                    <span ng-show="C.Status === 4" class="badge bg-danger">100%</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <script src="http://logisticsmanager.mitechnologiesinc.com/Resource/Plugins/DateRange/moment.min.js"></script>
+  <script
+    src="http://logisticsmanager.mitechnologiesinc.com/Resource/Plugins/DateRange/daterangepicker.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Ekko Lightbox -->
+  <script src="../plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/adminlte.min.js"></script>
+  <!-- Filterizr-->
+  <script src="../plugins/filterizr/jquery.filterizr.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="http://binmanager.mitechnologiesinc.com/Areas/CommonResources/alaSql/alasql.min.js"></script>
+  <!-- Page specific script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+  <script src="../dist/js/app.js"></script>
+
+
+</body>
+
+</html>
